@@ -7,9 +7,7 @@ import {webpack} from 'webpack'
 import {
   getComponentsJson,
   getProjectPackageJson,
-  postCDN,
-  saveComponentsStore,
-  setComponentsJson,
+
   setProjectPackageJson,
 } from '../utils'
 import {basePath} from '../utils/constant'
@@ -117,7 +115,6 @@ export default class Publish extends Command {
     execSync(`cd ${compPath} && npm publish`)
 
     this.log('upload pack to oss')
-    this.log(await postCDN(false, compPath))
 
     // Update component store
     // const compStorePath = resolve(basePath, "../../");
@@ -129,9 +126,6 @@ export default class Publish extends Command {
         item.version = packageInfo.version
       }
     }
-
-    setComponentsJson(compStore, editorPath)
-    return  saveComponentsStore(editorPath)
   };
 
   async run() {
